@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const SignUpForm = styled.div`
+const SignUpForm = styled.form`
 position: absolute;
 top: calc(50% - 250px);
 left: calc(50% - 250px);
@@ -60,7 +60,7 @@ box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
     display: flex;
     justify-content: space-between;
     margin-top: 25px;
-    margin-bottom: 30px;
+    margin-bottom: 5px;
     width: 100%;
     height: 40px;
 }
@@ -84,6 +84,7 @@ box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
     display: flex;
     justify-content: space-between;
     position: relative;
+    margin-top: 20px;
 }
 
 .sex-group p{
@@ -142,6 +143,14 @@ box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
     font-weight: 100;
     color: blue;
     cursor: pointer;
+}
+
+.error{
+    width: 100%;
+    padding: 2px;
+    color: red;
+    font-size: 16px;
+    left: 0px;
 }
 `;
 
