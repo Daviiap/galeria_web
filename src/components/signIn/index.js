@@ -2,7 +2,7 @@
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable react/jsx-filename-extension */
 import React, { useState } from 'react';
-import validator from '../../util/validators';
+import validator from '../../validator/validator';
 import SignInForm from './style';
 
 function signIn() {
@@ -17,23 +17,34 @@ function signIn() {
     passwordError,
   };
 
-  function restartErrors() {
+  function emailValidator() {
     setEmailError('');
+    if (!validator.EmailValidator(email)) {
+      setEmailError('Insira um email válido');
+      return false;
+    }
+    return true;
+  }
+
+  function passwordValidator() {
     setPasswordError('');
+    if (!validator.PasswordValidator(password)) {
+      setPasswordError('A senha deve ter pelo menos 8 caracteres');
+      return false;
+    }
+    return true;
+  }
+
+  function validation() {
+    if (!emailValidator()) return false;
+    if (!passwordValidator()) return false;
+    return true;
   }
 
   function handleSubmit(e) {
     e.preventDefault();
-    restartErrors();
 
-    if (!validator.EmailValidator(email)) {
-      setEmailError('Insira um email válido');
-      return;
-    }
-    if (!validator.PasswordValidator(password)) {
-      setPasswordError('A senha deve ter pelo menos 8 caracteres');
-      return;
-    }
+    if (!validation()) return;
 
     const data = {
       email,
@@ -46,13 +57,13 @@ function signIn() {
   return (
     <SignInForm onSubmit={handleSubmit}>
       <div className="content">
-        <input type="text" placeholder="Email" value={email} onChange={(e) => setEmai(e.target.value)} />
+        <input type="text" onKeyUp={emailValidator} placeholder="Email" value={email} onChange={(e) => setEmai(e.target.value)} />
         <div className="error">
           <h5>
             {errors.emailError}
           </h5>
         </div>
-        <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+        <input type="password" onKeyUp={passwordValidator} placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
         <div className="error">
           <h5>
             {errors.passwordError}

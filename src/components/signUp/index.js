@@ -1,8 +1,10 @@
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable react/jsx-filename-extension */
 import React, { useState } from 'react';
-import validator from '../../util/validators';
+import util from '../../util/util';
+import validator from '../../validator/validator';
 import SignUpForm from './style';
+// import api from '../../services/api';
 
 function SignUp() {
   const [name, setName] = useState('');
@@ -54,45 +56,50 @@ function SignUp() {
     setDateError('');
   }
 
-  function handleSubmit(e) {
+  function validation(age) {
+    if (!validator.NameValidator(name)) {
+      setNameError('Insira um nome válido');
+      return false;
+    }
+    if (!validator.EmailValidator(email)) {
+      setEmailError('Insira um email válido');
+      return false;
+    }
+    if (!validator.PasswordValidator(password)) {
+      setPasswordError('A senha deve ter pelo menos 8 caracteres');
+      return false;
+    }
+    if (password !== passwordAux) {
+      setPasswordError('As senhas não coincidem');
+      return false;
+    }
+    if (!validator.DateValidator(age)) {
+      setDateError('Você deve ter pelo menos 12 anos');
+      return false;
+    }
+    return true;
+  }
+
+  async function handleSubmit(e) {
     e.preventDefault();
 
     restartErrors();
 
     const date = `${year}/${month}/${day}`;
+    const age = util.getAge(date);
 
-    // Validações simples
-    if (!validator.NameValidator(name)) {
-      setNameError('Insira um nome válido');
-      return;
-    }
-    if (!validator.EmailValidator(email)) {
-      setEmailError('Insira um email válido');
-      return;
-    }
-    if (!validator.PasswordValidator(password)) {
-      setPasswordError('A senha deve ter pelo menos 8 caracteres');
-      return;
-    }
-    if (password !== passwordAux) {
-      setPasswordError('Senhas não coincidem');
-      return;
-    }
-    if (!validator.DateValidator(date)) {
-      setDateError('Você deve ter pelo menos 12 anos');
-      return;
-    }
+    if (!validation(age)) return;
 
     const data = {
       name,
       email,
-      password,
-      passwordAux,
-      instagram,
+      age,
       gender,
-      date,
+      instagram,
+      password,
     };
 
+    // await api.post('/register', data);
     console.log(data);
   }
 
@@ -118,7 +125,7 @@ function SignUp() {
         </div>
         <div className="inline-group">
           <input type="password" placeholder="Senha" value={password} onChange={(e) => setPassword(e.target.value)} />
-          <input type="password" placeholder="Confirmação da senha" value={passwordAux} onChange={(e) => setPasswordAux(e.target.value)} />
+          <input type="password" placeholder="Confirme sua senha" value={passwordAux} onChange={(e) => setPasswordAux(e.target.value)} />
         </div>
         <div className="error">
           <h5>

@@ -7,6 +7,7 @@ left: calc(50% - 250px);
 width: 500px;
 background: #fff;
 box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+padding: 25px;
 
 .content{
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
@@ -47,6 +48,11 @@ box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
     color: red;
     font-size: 16px;
     left: 0px;
+}
+
+@media screen and (max-width: 820px){
+    width: 400px;
+    left: calc(50% - 200px);
 }
 `;
 

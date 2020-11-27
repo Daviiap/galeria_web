@@ -1,7 +1,7 @@
 /* eslint-disable no-useless-escape */
 /* eslint-disable vars-on-top */
 /* eslint-disable no-var */
-import util from './util';
+import util from '../util/util';
 
 const validators = {
   emailReg: new RegExp(/^[A-Za-z0-9_\-\.]+@[A-Za-z0-9_\-\.]{2,}\.[A-Za-z0-9]{2,}(\.[A-Za-z0-9])?/),
@@ -18,7 +18,6 @@ const validators = {
     if (!this.emailReg.test(email)) {
       return false;
     }
-
     return true;
   },
   PasswordValidator(password) {
@@ -27,8 +26,8 @@ const validators = {
     }
     return true;
   },
-  DateValidator(date) {
-    if (util.getAge(date) < 12) {
+  DateValidator(age) {
+    if (age < 12) {
       return false;
     }
     return true;

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const SignUpForm = styled.form`
 position: absolute;
-top: calc(50% - 250px);
+top: calc(50% - 320px);
 left: calc(50% - 250px);
 width: 500px;
 background: #fff;
@@ -151,6 +151,11 @@ box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
     color: red;
     font-size: 16px;
     left: 0px;
+}
+
+@media screen and (max-width: 820px){
+    width: 400px;
+    left: calc(50% - 200px);
 }
 `;
 
