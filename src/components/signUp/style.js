@@ -149,7 +149,7 @@ box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
     width: 100%;
     padding: 2px;
     color: red;
-    font-size: 16px;
+    font-size: 15px;
     left: 0px;
 }
 

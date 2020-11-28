@@ -49,30 +49,44 @@ function SignUp() {
     dateError,
   };
 
-  function restartErrors() {
+  function nameValidation() {
     setNameError('');
-    setEmailError('');
-    setPasswordError('');
-    setDateError('');
-  }
-
-  function validation(age) {
     if (!validator.NameValidator(name)) {
       setNameError('Insira um nome válido');
       return false;
     }
+    return true;
+  }
+
+  function emailValidation() {
+    setEmailError('');
     if (!validator.EmailValidator(email)) {
       setEmailError('Insira um email válido');
       return false;
     }
+    return true;
+  }
+
+  function passwordValidation() {
+    setPasswordError('');
     if (!validator.PasswordValidator(password)) {
-      setPasswordError('A senha deve ter pelo menos 8 caracteres');
+      setPasswordError('A senha deve 8 caracteres, sendo um número, uma letra e um caracter especial');
       return false;
     }
-    if (password !== passwordAux) {
+    return true;
+  }
+
+  function passwordsValidation() {
+    setPasswordError('');
+    if (!util.equal(password, passwordAux)) {
       setPasswordError('As senhas não coincidem');
       return false;
     }
+    return true;
+  }
+
+  function dateValidation(age) {
+    setDateError('');
     if (!validator.DateValidator(age)) {
       setDateError('Você deve ter pelo menos 12 anos');
       return false;
@@ -80,10 +94,17 @@ function SignUp() {
     return true;
   }
 
+  function validation(age) {
+    if (!nameValidation()) return false;
+    if (!emailValidation()) return false;
+    if (!passwordValidation()) return false;
+    if (!passwordsValidation()) return false;
+    if (!dateValidation(age)) return false;
+    return true;
+  }
+
   async function handleSubmit(e) {
     e.preventDefault();
-
-    restartErrors();
 
     const date = `${year}/${month}/${day}`;
     const age = util.getAge(date);
@@ -101,6 +122,7 @@ function SignUp() {
 
     // await api.post('/register', data);
     console.log(data);
+    // window.location.reload();
   }
 
   return (
@@ -111,21 +133,21 @@ function SignUp() {
       </div>
 
       <div className="content">
-        <input type="text" placeholder="Nome" value={name} onChange={(e) => setName(e.target.value)} />
+        <input type="text" onKeyUp={nameValidation} placeholder="Nome" value={name} onChange={(e) => setName(e.target.value)} />
         <div className="error">
           <h5>
             {errors.nameError}
           </h5>
         </div>
-        <input type="text" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+        <input type="text" onKeyUp={emailValidation} placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
         <div className="error">
           <h5>
             {errors.emailError}
           </h5>
         </div>
         <div className="inline-group">
-          <input type="password" placeholder="Senha" value={password} onChange={(e) => setPassword(e.target.value)} />
-          <input type="password" placeholder="Confirme sua senha" value={passwordAux} onChange={(e) => setPasswordAux(e.target.value)} />
+          <input type="password" onKeyUp={passwordValidation} placeholder="Senha" value={password} onChange={(e) => setPassword(e.target.value)} />
+          <input type="password" onKeyUp={passwordsValidation} placeholder="Confirme sua senha" value={passwordAux} onChange={(e) => setPasswordAux(e.target.value)} />
         </div>
         <div className="error">
           <h5>

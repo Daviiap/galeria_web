@@ -46,7 +46,7 @@ padding: 25px;
     width: 100%;
     padding: 1.5px;
     color: red;
-    font-size: 16px;
+    font-size: 15px;
     left: 0px;
 }
 
