@@ -2,13 +2,13 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-import SignUp from './pages/SignUp/index';
+import Home from './pages/Home';
 
 function Routes() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path="/sign-up" component={SignUp} />
+        <Route exact path="/" component={Home} />
       </Switch>
     </BrowserRouter>
   );
